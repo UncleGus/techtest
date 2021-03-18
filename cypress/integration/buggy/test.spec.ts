@@ -15,14 +15,15 @@ context('Buggy site', () => {
     })
   })
 
-  const newUserName = makeValidPassword(8)
+  const newUserName = makeValidUsername(8)
   const newPassword = makeValidPassword(16)
   context('Registration', () => {
     before(() => {
-      cy.visit('/register')      
+      cy.visit('/register')
     })
 
     it('Can sign up a new user', () => {
+      cy.intercept('/prod/users').as('register')
       cy.get('#username').clear().type(newUserName)
       cy.get('#firstName').clear().type('Fake')
       cy.get('#lastName').clear().type('Name')
@@ -31,6 +32,7 @@ context('Buggy site', () => {
 
       cy.contains('button', 'Register').click()
 
+      cy.wait('@register')
       cy.contains('div.alert-success', 'Registration is successful')
     })
 
@@ -46,6 +48,16 @@ context('Buggy site', () => {
     })
   })
 })
+
+function makeValidUsername(length) {
+  let result = ''
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+  const lettersLength = letters.length
+  for (let i = 0; i < length; i++) {
+    result += letters.charAt(Math.floor(Math.random() * lettersLength))
+  }
+  return result
+}
 
 function makeValidPassword(length) {
   let result = ''
