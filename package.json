@@ -1,0 +1,25 @@
+{
+  "name": "westpac",
+  "version": "1.0.0",
+  "description": "Technical test",
+  "main": "n/a",
+  "dependencies": {
+    "cypress": "^6.8.0",
+    "typescript": "^4.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node ./node_modules/cypress/bin/cypress open",
+    "headless": "node ./node_modules/cypress/bin/cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UncleGus/techtest.git"
+  },
+  "author": "David Karl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UncleGus/techtest/issues"
+  },
+  "homepage": "https://github.com/UncleGus/techtest#readme"
+}
