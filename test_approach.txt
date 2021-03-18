@@ -1,0 +1,35 @@
+This depends a large amount on the development approach, so I will give a few examples.
+
+Waterfall/big bang delivery
+Breadth first focus to verify as much of the application as possible in as short a time as possible, drill down on critical areas of functionality by priority basis. Most likely
+things like registration and login and content management system (assuming there is one). Also depends on technology used. Off the shelf CMS? Customised? Automation developed in
+a similar order, focussing on breadth first (smoke test suite) and then most critical functionality, prioritised by a combination of importance and complexity. i.e. registration,
+emails logging in/out, etc. Smoke test should include basic health checks of any API endpoints called from the app, or exposed externally from the app, if there are any. Set up
+smoke tests to run at frequent intervals, probably using some form of CICD like Jenkins or Teamcity, or Azure pipelines etc. if it's cloud hosted (most likely). Full automation
+suite set up to run perhaps overnight every night (or at whatever timeslot is least used) and after every deployment.
+
+Agile
+Test each story as it is developed and build automation as the app is developed to catch regressions as soon as possible. Again focussing test effort on areas of most complexity,
+so off the shelf CMS would be low priority for testing, as it would be expected to work if it is a paid product. Customisation breaks that rule, so any areas of the CMS customised
+would be a good target for more rigourous testing. Code checkins trigger an automation test run of the unit tests first, followed by the UI smoke tests, and depending on the time
+needed to run the full automation suite, perhaps leaving that step for when the iteration is close to completion and delivery. Any automation that targets the area of the app
+being delivered/changed by the current story being tested is run in full and failed tests either turned into bug reports or updated in the automation to reflect the changes in the
+app
+
+If the app is API intensive
+If the app relies heavily on APIs to retrieve and send data, then a separate automation suite will be developed to cover the functionality of those APIs and ensure they behave
+according to the (hopefully extant) documentation, i.e. swagger or the like. Again, this suite would be run on every checkin to ensure the APIs are still working as intended.
+
+Mocking and data driven testing
+Since this looks like a reasonably data-heavy (and probably API-heavy) application, it might make sense to use data mocking to be able to test the UI and its behaviour independent
+of the database/API layer. This removes the need to keep test data maintained and in a known state for the tests to be reliable. It also allows for faster testing and easier testing
+of complex data variations. It also removes the need to set up test data through the UI, which might lead to failures in the setup of the tests due to bugs in the UI. These tests
+could be built to read defined sets of data parameters from, for example JSON files, and dynamically generate test cases from them, rather than hard coding each test case directly
+into the automation.
+
+Visual testing
+While visual testing of websites can be automated, it is very rarely worth the time investment. This would most likely be left as a manual step in any round of testing.
+
+Summary
+Overall, a combination of unit tests, API tests, UI tests with mocked data and end-to-end tests of the whole app through the UI ensures both separation of concerns and system
+integrity at the system and integration levels.

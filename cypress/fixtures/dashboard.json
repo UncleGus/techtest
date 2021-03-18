@@ -1,0 +1,15 @@
+{
+  "make": {
+    "id": "c0bm09bgagshpkqbsuag",
+    "name": "Lamborghini",
+    "image": "Lamborghini-Logo.png",
+    "votes": 111
+  },
+  "model": {
+    "id": "c0bm09bgagshpkqbsuag|c0bm09bgagshpkqbsuh0",
+    "make": "Lamborghini",
+    "name": "Diablo",
+    "image": "Diablo.jpg",
+    "votes": 333
+  }
+}
