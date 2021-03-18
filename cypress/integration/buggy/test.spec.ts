@@ -15,6 +15,16 @@ context('Buggy site', () => {
     })
   })
 
+  context('Api', () => {
+    it('Has the correct schema', () => {
+      cy.intercept('dashboard').as('dashboardResponse')
+      cy.visit('/')
+      cy.wait('@dashboardResponse').its('response.body')
+        .should('have.property', 'model')
+        .should('have.property', 'make')
+    })
+  })
+
   const newUserName = makeValidUsername(8)
   const newPassword = makeValidPassword(16)
   context('Registration', () => {
